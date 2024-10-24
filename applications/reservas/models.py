@@ -34,4 +34,13 @@ class Espacios(models.Model):
 
     def __str__(self):
         return f"{self.id} - {self.nombre} - {self.ubicacion} - {self.capacidad} - {self.descripcion} - {self.estado}"
-    
+
+
+class MetodosPago(models.Model):
+    nombre_metodo = models.CharField('Nombre del metodo', max_length=50)
+    class Meta:
+        managed = False  # Indica que Django no debe crear ni modificar la tabla en la DB
+        db_table = 'metodos_pago'
+
+        def __str__(self):
+            return f"{self.id} - {self.nombre_metodo}"
