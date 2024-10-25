@@ -22,6 +22,7 @@ class Datos(models.Model):
     
 
 class Espacios(models.Model):
+    id_espacio = models.AutoField(primary_key=True) 
     nombre = models.CharField('Nombre', max_length=120)
     ubicacion = models.CharField('Ubicacion', max_length=50)
     capacidad = models.IntegerField()
@@ -44,3 +45,76 @@ class MetodosPago(models.Model):
 
         def __str__(self):
             return f"{self.id} - {self.nombre_metodo}"
+
+
+class HorariosDisponible(models.Model):
+    id_horario = models.AutoField(primary_key=True)
+    id_espacio = models.ForeignKey(Espacios, on_delete=models.CASCADE, db_column='id_espacio')  
+    dia_semana = models.CharField('Día de la semana', max_length=20)
+    hora_apertura = models.TimeField('Hora de apertura')
+    hora_cierre = models.TimeField('Hora de cierre')
+
+    class Meta:
+        db_table = 'horarios_disponibles'  # Indicar la tabla ya existente en la base de datos
+
+    def __str__(self):
+        return f"{self.id_horario} - {self.dia_semana} ({self.hora_apertura} - {self.hora_cierre})"
+
+
+class Roles(models.Model):
+    id_rol = models.AutoField(primary_key=True) 
+    nombre_rol = models.CharField('Nombre', max_length=120)
+
+    class Meta:
+        db_table = 'roles'  
+
+    def __str__(self):
+        return f"{self.id} - {self.nombre_rol}"
+
+
+class Usuarios(models.Model):
+    id_usuario = models.AutoField(primary_key=True) 
+    nombre = models.CharField('Nombre', max_length=120)
+    email = models.CharField('Email', max_length=21)
+    password = models.CharField('password', max_length=30)
+    id_rol = models.ForeignKey(Roles, on_delete=models.CASCADE, db_column='id_rol')  # Relación con roles
+    direccion = models.CharField('Direccion', max_length=51)
+    telefono = models.IntegerField
+
+    class Meta:
+        db_table = 'usuarios'
+
+    def __str__(self):
+        return f"{self.id} - {self.nombre} - {self.password} - {self.id_rol} - {self.direccion} - {self.telefono}"
+    
+
+class Reservas(models.Model):
+    id_reserva = models.AutoField(primary_key=True) 
+    id_usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE, db_column='id_usuario')
+    id_espacio = models.ForeignKey(Espacios, on_delete=models.CASCADE, db_column='id_espacio')
+    fecha_reserva = models.DateField
+    hora_inicio = models.DateTimeField
+    hora_fin = models.DateTimeField
+    estado = models.CharField('Estado', max_length=21)
+    comentarios = models.CharField('Comentarios', max_length=255)
+    fecha_creacion = models.DateField
+
+    class Meta:
+        db_table = 'reservas'
+
+    def __str__(self):
+        return f"{self.id} - {self.id_usuario} - {self.id_espacio} - {self.fecha_reserva} - {self.hora_inicio} - {self.hora_fin} - {self.estado} - {self.comentarios} - {self.fecha_creacion}"
+    
+class Pagos(models.Model):
+       id_pago = models.AutoField(primary_key=True)
+       id_reserva = models.ForeignKey(Reservas, on_delete=models.CASCADE, db_column='id_reserva')
+       fecha_pago = models.DateTimeField
+       monto = models.DecimalField
+       id_metodo = models.ForeignKey(MetodosPago, on_delete=models.CASCADE, db_column='id_metodo_pago') 
+       estado = models.CharField('Estado_pago', max_length=21)
+
+       class Meta:
+           db_table = 'pagos'
+       def __str__(self):
+           return f"{self.id_pago} - {self.id_reserva} - {self.fecha_pago} - {self.monto} - {self.id_metodo} - {self.estado}"
+

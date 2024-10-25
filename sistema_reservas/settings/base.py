@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     #nuevas aplicaciones
     'rest_framework',
     'drf_yasg',
+    'corsheaders',
     'applications.reservas',
 ]
 
@@ -30,7 +31,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+# Permitir todas las solicitudes (opción temporal)
+CORS_ALLOW_ALL_ORIGINS = True
+
+# O permite solo tu frontend React (opción más segura para producción)
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # React (desarrollo)
+]
+
 
 ROOT_URLCONF = 'sistema_reservas.urls'
 

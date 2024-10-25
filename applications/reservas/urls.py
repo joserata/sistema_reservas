@@ -1,7 +1,7 @@
 # reservas/urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import DepartamentoViewSet, DatosViewSet, EspaciosViewSet, MetodosPagoViewSet
+from .views import DepartamentoViewSet, DatosViewSet, EspaciosViewSet, MetodosPagoViewSet, HorariosDisponibleViewSet, RolesViewSet, UsuariosViewSet, ReservasViewSet, PagosViewSet
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
@@ -10,6 +10,11 @@ router.register(r'departamentos', DepartamentoViewSet)
 router.register(r'datos', DatosViewSet)
 router.register(r'espacios', EspaciosViewSet)
 router.register(r'metodos_pagos', MetodosPagoViewSet)
+router.register(r'horarios_disponibles', HorariosDisponibleViewSet)
+router.register(r'roles', RolesViewSet)
+router.register(r'usuarios', UsuariosViewSet)
+router.register(r'reservas', ReservasViewSet)
+router.register(r'pagos', PagosViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(

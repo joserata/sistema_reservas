@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Departamento, Datos, Espacios, MetodosPago
+from .models import Departamento, Datos, Espacios, MetodosPago, HorariosDisponible, Roles, Usuarios, Reservas, Pagos
+
 
 class DepartamentoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,3 +21,28 @@ class MetodosPagoSerializer(serializers.ModelSerializer):
     class Meta:
         model = MetodosPago
         fields = '__all__'        
+
+class HorariosDisponibleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HorariosDisponible
+        fields = '__all__'        
+
+class RolesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Roles
+        fields = '__all__'
+
+class UsuariosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuarios
+        fields = '__all__' 
+
+class ReservasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservas
+        fields = '__all__'
+
+class PagosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pagos
+        fields = '__all__'
