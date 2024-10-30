@@ -34,12 +34,12 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
-# Permitir todas las solicitudes (opción temporal)
+
 CORS_ALLOW_ALL_ORIGINS = True
 
-# O permite solo tu frontend React (opción más segura para producción)
+
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # React (desarrollo)
+    'http://localhost:3000',  
 ]
 
 

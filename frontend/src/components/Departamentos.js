@@ -8,7 +8,7 @@ const Departamentos = () => {
     const [error, setError] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5; // Cambia esto si quieres mostrar más o menos elementos por página
+    const itemsPerPage = 5; 
     const [editingDepartamento, setEditingDepartamento] = useState(null);
     const [newName, setNewName] = useState('');
 
@@ -34,13 +34,13 @@ const Departamentos = () => {
         );
     }, [searchTerm, departamentos]);
 
-    // Función para manejar la edición
+    // edición
     const handleEdit = (departamento) => {
         setEditingDepartamento(departamento);
         setNewName(departamento.name); // Establecer el nombre actual del departamento para editar
     };
 
-    // Función para manejar la actualización
+    // actualización
     const handleUpdate = async () => {
         try {
             await axios.put(`http://localhost:8000/departamentos/${editingDepartamento.id}/`, {
@@ -60,7 +60,7 @@ const Departamentos = () => {
         }
     };
 
-    // Función para manejar la eliminación
+    // eliminación
     const handleDelete = async (id) => {
         if (window.confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
             try {

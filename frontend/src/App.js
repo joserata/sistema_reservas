@@ -5,6 +5,7 @@ import Home from './components/Home/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Departamentos from './pages/Departamentos';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
     return (
