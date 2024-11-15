@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Departamento, Datos, Espacios, MetodosPago, HorariosDisponible, Roles, Usuarios, Reservas, Pagos
 
-
 class DepartamentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Departamento
@@ -46,3 +45,27 @@ class PagosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pagos
         fields = '__all__'
+
+class UsuarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuarios
+        fields = ['id_usuario', 'nombre']  # Ajusta según el campo que contiene el nombre del usuario
+
+class EspacioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Espacios
+        fields = ['id', 'name']  # Ajusta si el campo del nombre es distinto
+        
+class ReservaSerializer(serializers.ModelSerializer):
+    id_usuario = UsuarioSerializer()
+    id_espacio = EspacioSerializer()
+
+    # Se aseguran de que se serialicen correctamente los tipos de datos de fecha y hora
+    fecha_reserva = serializers.DateField()  # Para el campo solo de fecha
+    hora_inicio = serializers.TimeField()  # Para el campo solo de hora
+    hora_fin = serializers.TimeField()  # Para el campo solo de hora
+    fecha_creacion = serializers.DateTimeField()  # Para el campo timestamp
+
+    class Meta:
+        model = Reservas
+        fields = ['id_reserva', 'id_usuario', 'id_espacio', 'fecha_reserva', 'hora_inicio', 'hora_fin', 'estado', 'comentarios', 'fecha_creacion']

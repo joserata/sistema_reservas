@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 from .views import DepartamentoViewSet, DatosViewSet, EspaciosViewSet, MetodosPagoViewSet, HorariosDisponibleViewSet, RolesViewSet, UsuariosViewSet, ReservasViewSet, PagosViewSet
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from . import views
 
 router = DefaultRouter()
 router.register(r'departamentos', DepartamentoViewSet)
@@ -32,4 +33,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),  # Swagger UI
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),  # ReDoc
+    path('espacios/', views.lista_espacios, name='lista_espacios'),  # Ruta para la lista de espacios
+    path('crear-espacio/', views.crear_espacio, name='crear_espacio')
 ]

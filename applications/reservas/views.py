@@ -1,7 +1,9 @@
 # reservas/views.py
 from rest_framework import viewsets
 from .models import Departamento, Datos, Espacios, MetodosPago, HorariosDisponible, Roles, Usuarios, Reservas, Pagos  # Asegúrate de importar ambos modelos
-from .serializers import DepartamentoSerializer, DatosSerializer, EspaciosSerializer, MetodosPagoSerializer, HorariosDisponibleSerializer, RolesSerializer, UsuariosSerializer, ReservasSerializer, PagosSerializer  # Asegúrate de importar ambos serializadores
+from .serializers import DepartamentoSerializer, DatosSerializer, EspaciosSerializer, MetodosPagoSerializer, HorariosDisponibleSerializer, RolesSerializer, UsuariosSerializer, ReservaSerializer,  ReservasSerializer, PagosSerializer  # Asegúrate de importar ambos serializadores
+from .forms import EspacioForm
+from django.shortcuts import render, redirect
 
 class DepartamentoViewSet(viewsets.ModelViewSet):
     queryset = Departamento.objects.all()
@@ -33,8 +35,23 @@ class UsuariosViewSet(viewsets.ModelViewSet):
 
 class ReservasViewSet(viewsets.ModelViewSet):
     queryset = Reservas.objects.all()
-    serializer_class = ReservasSerializer
+    serializer_class = ReservaSerializer  # Usa el serializador con los datos anidados
+
 
 class PagosViewSet(viewsets.ModelViewSet):
     queryset = Pagos.objects.all()
     serializer_class = PagosSerializer    
+
+def lista_espacios(request):
+    espacios = Espacios.objects.all()
+    return render(request, 'espacios/lista_espacios.html', {'espacios': espacios})
+
+def crear_espacio(request):
+    if request.method == 'POST':
+        form = EspacioForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_espacios')  # Redirige a la lista después de crear el espacio
+    else:
+        form = EspacioForm()
+    return render(request, 'espacios/crear_espacio.html', {'form': form})

@@ -6,6 +6,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Departamentos from './pages/Departamentos';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Espacios from './components/Espacios';
+import Reservas from './components/Reservas';
 
 const App = () => {
     return (
@@ -16,6 +18,8 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/departamentos" element={<Departamentos />} />
+                    <Route path="/espacios" element={<Espacios />} />
+                    <Route path="/reservas" element={<Reservas />} />
                 </Routes>
                 <Footer />
             </div>
